@@ -1,115 +1,100 @@
+//Created by Jakub Mączka 2019
+//Copyright Jakub Mączka 2019
+
 #include "mainwindow.h"
-#include "mainwindow.h"
+#include "addnotedialog.h"
+#include "addcaldialog.h"
+#include "addcashdialog.h"
+
 MainWindow::MainWindow()
 {
     setWindowTitle("Student Organizer GitHub");
-    setFixedSize(500, 500);
-    createIcons();
-    setupCoreWidgets();
-    createMenuBar();
-    createToolBar();
-    centralWidgetLayout->addLayout(formLayout);
-    centralWidgetLayout->addWidget(appTable);
-    centralWidgetLayout->addLayout(buttonsLayout);
-    mainWidget->setLayout(centralWidgetLayout);
-    setCentralWidget(mainWidget);
-    setupSignalsAndSlot();
-}
+    //setFixedSize(400, 720);
 
-void MainWindow::createIcons() {
-    newIcon = QPixmap("new.png");
-    openIcon = QPixmap("open.png");
-    closeIcon = QPixmap("close.png");
-    clearIcon = QPixmap("clear.png");
-}
-
-void MainWindow::setupCoreWidgets() {
     mainWidget = new QWidget();
     centralWidgetLayout = new QVBoxLayout();
-    formLayout = new QGridLayout();
-    buttonsLayout = new QHBoxLayout();
-    noteLabel = new QLabel("Treść notatki:");
-    dateOfNoteLabel = new QLabel("Data notatki:");
-    priorityOfNoteLabel = new QLabel("Priorytet:");
-    savePushButton = new QPushButton("Zapisz");
-    newPushButton = new QPushButton("Wyczyść");
-    noteLineEdit = new QLineEdit();
-    dateOfNoteEdit = new QDateEdit(QDate::currentDate());
-    priorityOfNoteLineEdit = new QLineEdit();
-    // TableView
-    appTable = new QTableView();
-    model = new QStandardItemModel(1, 3, this);
-    appTable->setContextMenuPolicy(Qt::CustomContextMenu);
-    appTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    model->setHorizontalHeaderItem(0, new QStandardItem(QString("Notatka")));
-    model->setHorizontalHeaderItem(1, new QStandardItem(QString("Data")));
-    model->setHorizontalHeaderItem(2, new QStandardItem(QString("Priorytet")));
-    appTable->setModel(model);
+    /*QFrame* line = new QFrame();
+    line->setFrameShape(QFrame::HLine);
+    line->setFrameShadow(QFrame::Sunken);*/
+    //Sekcja Notatki
+    noteLayout = new QGridLayout();
+    noteLabel = new QLabel ("Ostatnie Notatki");
+    noteLayout->addWidget(noteLabel,0,0,Qt::AlignCenter);
+    //noteLayout->addWidget(line,1,0);
+    centralWidgetLayout->addLayout(noteLayout);
+    //Przyciski Notatek
+    noteButtons = new QHBoxLayout();
+    addNoteButton = new QPushButton("Dodaj");
+    seeNoteButton = new QPushButton("Wyświetl");
+    noteButtons->addStretch();
+    noteButtons->addWidget(addNoteButton);
+    noteButtons->addWidget(seeNoteButton);
+    centralWidgetLayout->addLayout(noteButtons);
+    //Slots Signals Notatki
+    QObject::connect(addNoteButton, SIGNAL(clicked()), this, SLOT(on_addNoteButton_clicked()));
 
-    QStandardItem *firstItem = new QStandardItem(QString("Testowa notatka"));
-    QDate dateOfNote(2000, 1, 1);
-    QStandardItem *secondItem = new QStandardItem(dateOfNote.toString());
-    QStandardItem *thirdItem = new QStandardItem(QString("Testowa"));
-    model->setItem(0, 0, firstItem);
-    model->setItem(0, 1, secondItem);
-    model->setItem(0, 2, thirdItem);
-    formLayout->addWidget(noteLabel, 0, 0);
-    formLayout->addWidget(noteLineEdit, 0, 1);
-    formLayout->addWidget(dateOfNoteLabel, 1, 0);
-    formLayout->addWidget(dateOfNoteEdit, 1, 1);
-    formLayout->addWidget(priorityOfNoteLabel, 2 ,0);
-    formLayout->addWidget(priorityOfNoteLineEdit, 2, 1);
-    buttonsLayout->addStretch();
-    buttonsLayout->addWidget(savePushButton);
-    buttonsLayout->addWidget(newPushButton);
-}
+    //Sekcja Kalendarz
+    calLayout = new QGridLayout();
+    calLabel = new QLabel ("Dzisiejsze Wydarzenia");
+    calLayout->addWidget(calLabel,0,0,Qt::AlignCenter);
+    //calLayout->addWidget(line,1,0);
+    centralWidgetLayout->addLayout(calLayout);
+    //Przyciski Kalendarz
+    calButtons = new QHBoxLayout();
+    addCalButton = new QPushButton("Dodaj");
+    seeCalButton = new QPushButton("Wyświetl");
+    calButtons->addStretch();
+    calButtons->addWidget(addCalButton);
+    calButtons->addWidget(seeCalButton);
+    centralWidgetLayout->addLayout(calButtons);
+    //Slots Signals Kalendarz
+    QObject::connect(addCalButton, SIGNAL(clicked()), this, SLOT(on_addCalButton_clicked()));
 
-void MainWindow::createMenuBar() {
-    // Setup File Menu
-    appMenu = menuBar()->addMenu("&File");
-    quitAction = new QAction(closeIcon, "Wyjście", this);
-    newAction = new QAction(newIcon, "&New", this);
-    openAction = new QAction(openIcon, "&New", this);
-    appMenu->addAction(newAction);
-    appMenu->addAction(openAction);
-    appMenu->addSeparator();
-    appMenu->addAction(quitAction);
-    helpMenu = menuBar()->addMenu("Help");
-    aboutAction = new QAction("About", this);
-    helpMenu->addAction(aboutAction);
-}
+    //Sekcja Budżet
+    cashLayout = new QGridLayout();
+    cashLabel = new QLabel ("Studencki Budżet");
+    cashLayout->addWidget(cashLabel,0,0,Qt::AlignCenter);
+    centralWidgetLayout->addLayout(cashLayout);
+    //Przyciski Budżet
+    cashButtons = new QHBoxLayout();
+    addCashButton = new QPushButton("Dodaj");
+    seeCashButton = new QPushButton("Wyświetl");
+    cashButtons->addStretch();
+    cashButtons->addWidget(addCashButton);
+    cashButtons->addWidget(seeCashButton);
+    centralWidgetLayout->addLayout(cashButtons);
+    //Slots Signals Kalendarz
+    QObject::connect(addCashButton, SIGNAL(clicked()), this, SLOT(on_addCashButton_clicked()));
 
-void MainWindow::createToolBar() {
-    // Setup Tool bar menu
-    toolbar = addToolBar("main toolbar");
-    toolbar->setMovable(false);
-    newToolBarAction = toolbar->addAction(QIcon(newIcon), "New File");
-    openToolBarAction = toolbar->addAction(QIcon(openIcon), "Open Icon");
-    toolbar->addSeparator();
-    clearToolBarAction = toolbar->addAction(QIcon(clearIcon), "Clear All");
-    closeToolBarAction = toolbar->addAction(QIcon(closeIcon), "Quit Application");
+    mainWidget->setLayout(centralWidgetLayout);
+    setCentralWidget(mainWidget);
 }
+ void MainWindow::on_addNoteButton_clicked()
+ {
+    addnotedialog dialog;
+     dialog.setModal(true);
+     dialog.exec();
+ }
 
-void MainWindow::setupSignalsAndSlot() {
-    // Setup Signals And Slots
-    connect(quitAction, &QAction::triggered, this, &QApplication::quit);
-    connect(closeToolBarAction, &QAction::triggered, this, &QApplication::quit);
-    connect(savePushButton, SIGNAL(clicked()), this, SLOT(saveButtonClicked()));
-}
+ void MainWindow::on_addCalButton_clicked()
+ {
+     addcaldialog dialog2;
+     dialog2.setModal(true);
+     dialog2.exec();
+ }
 
-void MainWindow::saveButtonClicked()
-{
-    QStandardItem *note = new QStandardItem(noteLineEdit->text());
-    QStandardItem *don = new QStandardItem(dateOfNoteEdit->date().toString());
-    QStandardItem *priority = new QStandardItem(priorityOfNoteLineEdit->text());
-    model->appendRow({note, don, priority});
-    clearFields();
-}
+ void MainWindow::on_addCashButton_clicked()
+ {
+     addcashdialog dialog3;
+     dialog3.setModal(true);
+     dialog3.exec();
+ }
 
-void MainWindow::clearFields()
-{
-    noteLineEdit->clear();
-    priorityOfNoteLineEdit->setText("");
-    QDate dateOfNote(2000, 1, 1);
-    dateOfNoteEdit->setDate(dateOfNote);
-}
+/*void MainWindow::createLine() {
+    QFrame* line = new QFrame();
+    line->setFrameShape(QFrame::HLine);
+    line->setFrameShadow(QFrame::Sunken);
+    noteLayout->addWidget(line,1,0);
+    calLayout->addWidget(line,1,0);
+    cashLayout->addWidget(line,1,0);
+}*/

@@ -1,3 +1,6 @@
+//Created by Jakub Mączka 2019
+//Copyright Jakub Mączka 2019
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 #include <QMainWindow>
@@ -19,6 +22,11 @@
 #include <QToolBar>
 #include <QTableView>
 #include <QHeaderView>
+#include <QTabWidget>
+#include <QFrame>
+#include "addnotedialog.h"
+#include "addcaldialog.h"
+
 
 class MainWindow : public QMainWindow
 {
@@ -27,52 +35,41 @@ class MainWindow : public QMainWindow
 public:
     MainWindow();
 private slots:
-    void saveButtonClicked();
+    void on_addNoteButton_clicked();
+    void on_addCalButton_clicked();
+    void on_addCashButton_clicked();
+
 private:
-    // Widgets
+    addnotedialog *dialog;
+    addcaldialog *dialog2;
+    //Main Window
     QWidget *mainWidget;
     QVBoxLayout *centralWidgetLayout;
-    QGridLayout *formLayout;
-    QHBoxLayout *buttonsLayout;
+    QFrame *line;
+    //Sekcja Notatki
+    QGridLayout *noteLayout;
     QLabel *noteLabel;
-    QLabel *dateOfNoteLabel;
-    QLabel *priorityOfNoteLabel;
-    QPushButton *savePushButton;
-    QPushButton *newPushButton;
-    QLineEdit *noteLineEdit;
-    QDateEdit *dateOfNoteEdit;
-    QLineEdit *priorityOfNoteLineEdit;
-    QTableView *appTable;
-    QStandardItemModel *model;
-    // Menus
-    QMenu *appMenu;
-    QMenu *addMenu;
-    QMenu *helpMenu;
-    // Actions
-    QAction *quitAction;
-    QAction *aboutAction;
-    QAction *saveAction;
-    QAction *cancelAction;
-    QAction *openAction;
-    QAction *newAction;
-    QAction *aboutQtAction;
-    QAction *newToolBarAction;
-    QAction *openToolBarAction;
-    QAction *closeToolBarAction;
-    QAction *clearToolBarAction;
-    // Toolbar
-    QToolBar *toolbar;
-    // Icons
-    QPixmap newIcon;
-    QPixmap openIcon;
-    QPixmap closeIcon;
-    QPixmap clearIcon;
-    // init methods
-    void clearFields();
-    void createIcons();
-    void createMenuBar();
-    void createToolBar();
-    void setupSignalsAndSlot();
-    void setupCoreWidgets();
+    QHBoxLayout *noteButtons;
+    QPushButton *addNoteButton;
+    QPushButton *seeNoteButton;
+    QPushButton *delNoteButton;
+    //Sekcja Kalendarz
+    QGridLayout *calLayout;
+    QLabel *calLabel;
+    QHBoxLayout *calButtons;
+    QPushButton *addCalButton;
+    QPushButton *seeCalButton;
+    QPushButton *delCalButton;
+    //Sekcja Budżet
+    QGridLayout *cashLayout;
+    QLabel *cashLabel;
+    QHBoxLayout *cashButtons;
+    QPushButton *addCashButton;
+    QPushButton *seeCashButton;
+    QPushButton *delCashButton;
+    //Metody
+    void createLine();
+    void createMenu();
+
 };
 #endif
