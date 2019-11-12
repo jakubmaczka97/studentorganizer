@@ -20,13 +20,17 @@ SOURCES += \
     addcashdialog.cpp \
     addnotedialog.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    seecaldialog.cpp \
+    seenotedialog.cpp
 
 HEADERS += \
     addcaldialog.h \
     addcashdialog.h \
     addnotedialog.h \
-    mainwindow.h
+    mainwindow.h \
+    seecaldialog.h \
+    seenotedialog.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -36,4 +40,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 FORMS += \
     addcaldialog.ui \
     addcashdialog.ui \
-    addnotedialog.ui
+    addnotedialog.ui \
+    seecaldialog.ui \
+    seenotedialog.ui

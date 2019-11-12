@@ -24,6 +24,8 @@
 #include <QHeaderView>
 #include <QTabWidget>
 #include <QFrame>
+#include <QtSql>
+#include <QDebug>
 #include "addnotedialog.h"
 #include "addcaldialog.h"
 
@@ -31,6 +33,26 @@
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+public:
+    QSqlDatabase sogithub;
+    void connClose()
+    {
+        sogithub.close();
+        sogithub.removeDatabase(QSqlDatabase::defaultConnection);
+    }
+    bool connOpen()
+    {
+        QSqlDatabase sogithub=QSqlDatabase::addDatabase("QSQLITE");
+        sogithub.setDatabaseName("C:/sqlite/sogithub.db");
+        if(!sogithub.open()){
+            qDebug()<<("Coś poszło nie tak :(");
+            return false;
+        }
+        else{
+            qDebug()<<("Wszystko działa");
+            return true;
+        }
+    }
 
 public:
     MainWindow();
@@ -38,10 +60,12 @@ private slots:
     void on_addNoteButton_clicked();
     void on_addCalButton_clicked();
     void on_addCashButton_clicked();
+    void on_seeNoteButton_clicked();
+    void on_seeCalButton_clicked();
 
 private:
-    addnotedialog *dialog;
-    addcaldialog *dialog2;
+    //addnotedialog *dialog;
+    //addcaldialog *dialog2;
     //Main Window
     QWidget *mainWidget;
     QVBoxLayout *centralWidgetLayout;
@@ -67,6 +91,8 @@ private:
     QPushButton *addCashButton;
     QPushButton *seeCashButton;
     QPushButton *delCashButton;
+
+    QLabel *sqlLabel;
     //Metody
     void createLine();
     void createMenu();

@@ -5,6 +5,9 @@
 #include "addnotedialog.h"
 #include "addcaldialog.h"
 #include "addcashdialog.h"
+#include "seenotedialog.h"
+#include "seecaldialog.h"
+
 
 MainWindow::MainWindow()
 {
@@ -32,7 +35,7 @@ MainWindow::MainWindow()
     centralWidgetLayout->addLayout(noteButtons);
     //Slots Signals Notatki
     QObject::connect(addNoteButton, SIGNAL(clicked()), this, SLOT(on_addNoteButton_clicked()));
-
+    QObject::connect(seeNoteButton, SIGNAL(clicked()), this, SLOT(on_seeNoteButton_clicked()));
     //Sekcja Kalendarz
     calLayout = new QGridLayout();
     calLabel = new QLabel ("Dzisiejsze Wydarzenia");
@@ -49,6 +52,7 @@ MainWindow::MainWindow()
     centralWidgetLayout->addLayout(calButtons);
     //Slots Signals Kalendarz
     QObject::connect(addCalButton, SIGNAL(clicked()), this, SLOT(on_addCalButton_clicked()));
+    QObject::connect(seeCalButton, SIGNAL(clicked()), this, SLOT(on_seeCalButton_clicked()));
 
     //Sekcja Budżet
     cashLayout = new QGridLayout();
@@ -65,6 +69,13 @@ MainWindow::MainWindow()
     centralWidgetLayout->addLayout(cashButtons);
     //Slots Signals Kalendarz
     QObject::connect(addCashButton, SIGNAL(clicked()), this, SLOT(on_addCashButton_clicked()));
+    sqlLabel = new QLabel();
+    centralWidgetLayout->addWidget(sqlLabel);
+
+    if(!connOpen())
+        sqlLabel->setText("Błąd połaczenia z bazą danych");
+    else
+        sqlLabel->setText("Połączono z bazą danych");
 
     mainWidget->setLayout(centralWidgetLayout);
     setCentralWidget(mainWidget);
@@ -76,6 +87,12 @@ MainWindow::MainWindow()
      dialog.exec();
  }
 
+ void MainWindow::on_seeNoteButton_clicked()
+ {
+     seenotedialog dialogsec;
+     dialogsec.setModal(true);
+     dialogsec.exec();
+ }
  void MainWindow::on_addCalButton_clicked()
  {
      addcaldialog dialog2;
@@ -83,6 +100,12 @@ MainWindow::MainWindow()
      dialog2.exec();
  }
 
+ void MainWindow::on_seeCalButton_clicked()
+ {
+     seecaldialog dialogsec2;
+     dialogsec2.setModal(true);
+     dialogsec2.exec();
+ }
  void MainWindow::on_addCashButton_clicked()
  {
      addcashdialog dialog3;

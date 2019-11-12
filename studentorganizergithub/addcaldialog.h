@@ -10,6 +10,10 @@
 #include <QDateEdit>
 #include <QTimeEdit>
 #include <QGridLayout>
+#include "mainwindow.h"
+#include <QString>
+#include <QDate>
+#include <QTime>
 
 //namespace Ui {
 //class addcaldialog;
@@ -22,7 +26,8 @@ class addcaldialog : public QDialog
 public:
    explicit addcaldialog(QWidget *parent = nullptr);
    ~addcaldialog();
-
+private slots:
+    void on_addButton_clicked();
 private:
     QWidget *dialog2;
     QGridLayout *layout2;
@@ -38,6 +43,12 @@ private:
     QTimeEdit *timeEdit;
     QPushButton *addButton;
     QPushButton *clearButton;
+    QLabel *sqlLabel;
+    QDate *date;
+    QTime *time;
+
+    QString *dates;
+    QString *times;
 };
 
 #endif // ADDCALDIALOG_H

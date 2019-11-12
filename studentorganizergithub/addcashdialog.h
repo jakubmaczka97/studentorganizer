@@ -10,6 +10,7 @@
 #include <QDateEdit>
 #include <QTimeEdit>
 #include <QGridLayout>
+#include "mainwindow.h"
 
 class addcashdialog : public QDialog
 {
@@ -18,7 +19,8 @@ class addcashdialog : public QDialog
 public:
     explicit addcashdialog(QWidget *parent = nullptr);
     ~addcashdialog();
-
+private slots:
+    void on_addButton_clicked();
 private:
         QWidget *dialog3;
         QGridLayout *layout3;
@@ -30,6 +32,7 @@ private:
         QLineEdit *priceEdit;
         QPushButton *addButton;
         QPushButton *clearButton;
+        QLabel *sqlLabel;
 };
 
 #endif // ADDCASHDIALOG_H
