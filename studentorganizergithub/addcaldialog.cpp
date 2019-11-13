@@ -15,7 +15,7 @@ addcaldialog::addcaldialog(QWidget *parent) :
     timeLabel = new QLabel("Godzina: ");
     timeEdit = new QTimeEdit();
     addButton = new QPushButton("Dodaj");
-    clearButton = new QPushButton("Wyczyść");
+    //clearButton = new QPushButton("Zamknij");
     sqlLabel = new QLabel();
     layout2 = new QGridLayout;
     layout2->addWidget(titleLabel, 0, 0);
@@ -29,7 +29,7 @@ addcaldialog::addcaldialog(QWidget *parent) :
     layout2->addWidget(timeLabel, 3, 2);
     layout2->addWidget(timeEdit, 3, 3);
     layout2->addWidget(addButton, 4, 0);
-    layout2->addWidget(clearButton, 4, 1);
+    //layout2->addWidget(clearButton, 4, 1);
     layout2->addWidget(sqlLabel,5,0);
     setLayout(layout2);
     setWindowTitle("Dodaj Wydarzenie");
@@ -42,6 +42,7 @@ addcaldialog::addcaldialog(QWidget *parent) :
 
 
     connect(addButton, SIGNAL(clicked()), this, SLOT(on_addButton_clicked()));
+    //connect(clearButton, SIGNAL(clicked()), this, SLOT(close()));
 }
 
 void addcaldialog::on_addButton_clicked()

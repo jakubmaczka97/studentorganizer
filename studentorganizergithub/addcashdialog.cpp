@@ -11,7 +11,7 @@ addcashdialog::addcashdialog(QWidget *parent) :
     priceLabel = new QLabel("Kwota: ");
     priceEdit = new QLineEdit();
     addButton = new QPushButton("Dodaj");
-    clearButton = new QPushButton("Wyczyść");
+    //clearButton = new QPushButton("Zamknij");
     sqlLabel = new QLabel;
     layout3 = new QGridLayout;
     layout3->addWidget(titleLabel, 0, 0);
@@ -21,7 +21,7 @@ addcashdialog::addcashdialog(QWidget *parent) :
     layout3->addWidget(priceLabel, 2, 0);
     layout3->addWidget(priceEdit, 2, 1);
     layout3->addWidget(addButton, 3, 0);
-    layout3->addWidget(clearButton, 3, 1);
+    //layout3->addWidget(clearButton, 3, 1);
     layout3->addWidget(sqlLabel, 4, 0);
     setLayout(layout3);
     setWindowTitle("Dodaj Wpis Do Budżetu");
@@ -33,6 +33,7 @@ addcashdialog::addcashdialog(QWidget *parent) :
         sqlLabel->setText("Połączono z bazą danych");
 
     connect(addButton, SIGNAL(clicked()), this, SLOT(on_addButton_clicked()));
+    //connect(clearButton, SIGNAL(clicked()), this, SLOT(close()));
 }
 
 void addcashdialog::on_addButton_clicked()

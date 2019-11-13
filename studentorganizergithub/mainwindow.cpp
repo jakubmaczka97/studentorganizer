@@ -7,6 +7,7 @@
 #include "addcashdialog.h"
 #include "seenotedialog.h"
 #include "seecaldialog.h"
+#include "seecashdialog.h"
 
 
 MainWindow::MainWindow()
@@ -15,69 +16,60 @@ MainWindow::MainWindow()
     //setFixedSize(400, 720);
 
     mainWidget = new QWidget();
-    centralWidgetLayout = new QVBoxLayout();
-    /*QFrame* line = new QFrame();
-    line->setFrameShape(QFrame::HLine);
-    line->setFrameShadow(QFrame::Sunken);*/
+    widgetLayout = new QGridLayout();
     //Sekcja Notatki
-    noteLayout = new QGridLayout();
-    noteLabel = new QLabel ("Ostatnie Notatki");
-    noteLayout->addWidget(noteLabel,0,0,Qt::AlignCenter);
-    //noteLayout->addWidget(line,1,0);
-    centralWidgetLayout->addLayout(noteLayout);
+    noteLabel = new QLabel ("Notatki");
+    widgetLayout->addWidget(noteLabel,0,0,Qt::AlignCenter);
     //Przyciski Notatek
-    noteButtons = new QHBoxLayout();
-    addNoteButton = new QPushButton("Dodaj");
-    seeNoteButton = new QPushButton("Wyświetl");
-    noteButtons->addStretch();
-    noteButtons->addWidget(addNoteButton);
-    noteButtons->addWidget(seeNoteButton);
-    centralWidgetLayout->addLayout(noteButtons);
+    addNoteButton = new QPushButton("Dodaj notatkę");
+    seeNoteButton = new QPushButton("Wyświetl notatki");
+    widgetLayout->addWidget(addNoteButton,1,0);
+    widgetLayout->addWidget(seeNoteButton,2,0);
     //Slots Signals Notatki
     QObject::connect(addNoteButton, SIGNAL(clicked()), this, SLOT(on_addNoteButton_clicked()));
     QObject::connect(seeNoteButton, SIGNAL(clicked()), this, SLOT(on_seeNoteButton_clicked()));
+
     //Sekcja Kalendarz
-    calLayout = new QGridLayout();
-    calLabel = new QLabel ("Dzisiejsze Wydarzenia");
-    calLayout->addWidget(calLabel,0,0,Qt::AlignCenter);
-    //calLayout->addWidget(line,1,0);
-    centralWidgetLayout->addLayout(calLayout);
+    calLabel = new QLabel ("Kalendarz");
+    widgetLayout->addWidget(calLabel,3,0,Qt::AlignCenter);
     //Przyciski Kalendarz
-    calButtons = new QHBoxLayout();
-    addCalButton = new QPushButton("Dodaj");
-    seeCalButton = new QPushButton("Wyświetl");
-    calButtons->addStretch();
-    calButtons->addWidget(addCalButton);
-    calButtons->addWidget(seeCalButton);
-    centralWidgetLayout->addLayout(calButtons);
+    addCalButton = new QPushButton("Dodaj wydarzenie");
+    seeCalButton = new QPushButton("Wyświetl kalendarz");
+    widgetLayout->addWidget(addCalButton,4,0);
+    widgetLayout->addWidget(seeCalButton,5,0);
     //Slots Signals Kalendarz
     QObject::connect(addCalButton, SIGNAL(clicked()), this, SLOT(on_addCalButton_clicked()));
     QObject::connect(seeCalButton, SIGNAL(clicked()), this, SLOT(on_seeCalButton_clicked()));
 
     //Sekcja Budżet
-    cashLayout = new QGridLayout();
-    cashLabel = new QLabel ("Studencki Budżet");
-    cashLayout->addWidget(cashLabel,0,0,Qt::AlignCenter);
-    centralWidgetLayout->addLayout(cashLayout);
+    cashLabel = new QLabel ("Budżet");
+    widgetLayout->addWidget(cashLabel,6,0,Qt::AlignCenter);
     //Przyciski Budżet
-    cashButtons = new QHBoxLayout();
-    addCashButton = new QPushButton("Dodaj");
-    seeCashButton = new QPushButton("Wyświetl");
-    cashButtons->addStretch();
-    cashButtons->addWidget(addCashButton);
-    cashButtons->addWidget(seeCashButton);
-    centralWidgetLayout->addLayout(cashButtons);
+
+    addCashButton = new QPushButton("Dodaj wpis do budżetu");
+    seeCashButton = new QPushButton("Wyświetl budżet");
+    widgetLayout->addWidget(addCashButton,7,0);
+    widgetLayout->addWidget(seeCashButton,8,0);
     //Slots Signals Kalendarz
     QObject::connect(addCashButton, SIGNAL(clicked()), this, SLOT(on_addCashButton_clicked()));
+    QObject::connect(seeCashButton, SIGNAL(clicked()), this, SLOT(on_seeCashButton_clicked()));
+    //Pomocnicze
+    line = new QFrame;
+    line->setFrameShape(QFrame::HLine);
+    line->setFrameShadow(QFrame::Sunken);
+    widgetLayout->addWidget(line,9,0);
+    closeButton =new QPushButton("Zamknij program");
+    widgetLayout->addWidget(closeButton,10,0);
+    QObject::connect(closeButton, SIGNAL(clicked()), this, SLOT(close()));
     sqlLabel = new QLabel();
-    centralWidgetLayout->addWidget(sqlLabel);
+    widgetLayout->addWidget(sqlLabel,11,0);
 
     if(!connOpen())
         sqlLabel->setText("Błąd połaczenia z bazą danych");
     else
         sqlLabel->setText("Połączono z bazą danych");
 
-    mainWidget->setLayout(centralWidgetLayout);
+    mainWidget->setLayout(widgetLayout);
     setCentralWidget(mainWidget);
 }
  void MainWindow::on_addNoteButton_clicked()
@@ -111,6 +103,13 @@ MainWindow::MainWindow()
      addcashdialog dialog3;
      dialog3.setModal(true);
      dialog3.exec();
+ }
+
+ void MainWindow::on_seeCashButton_clicked()
+ {
+     seecashdialog dialogsec3;
+     dialogsec3.setModal(true);
+     dialogsec3.exec();
  }
 
 /*void MainWindow::createLine() {

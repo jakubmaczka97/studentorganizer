@@ -1,4 +1,5 @@
 QT       += core gui sql
+#RC_ICONS = myappico.ico
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -22,6 +23,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     seecaldialog.cpp \
+    seecashdialog.cpp \
     seenotedialog.cpp
 
 HEADERS += \
@@ -30,8 +32,10 @@ HEADERS += \
     addnotedialog.h \
     mainwindow.h \
     seecaldialog.h \
+    seecashdialog.h \
     seenotedialog.h
 
+QMAKE_CXXFLAGS += -std=gnu++14
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
@@ -42,4 +46,8 @@ FORMS += \
     addcashdialog.ui \
     addnotedialog.ui \
     seecaldialog.ui \
+    seecashdialog.ui \
     seenotedialog.ui
+
+#RESOURCES += \
+#    res.qrc

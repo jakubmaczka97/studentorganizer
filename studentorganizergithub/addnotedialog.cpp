@@ -12,7 +12,7 @@ addnotedialog::addnotedialog(QWidget *parent) :
     priorityLabel = new QLabel("Priorytet Notatki");
     priorityEdit = new QLineEdit();
     addButton = new QPushButton("Dodaj");
-    clearButton = new QPushButton("Wyczyść");
+    //clearButton = new QPushButton("Zamknij");
     sqlLabel = new QLabel();
     layout = new QGridLayout;
     layout->addWidget(titleLabel, 0, 0);
@@ -22,7 +22,7 @@ addnotedialog::addnotedialog(QWidget *parent) :
     layout->addWidget(priorityLabel, 2, 0);
     layout->addWidget(priorityEdit, 2, 1);
     layout->addWidget(addButton, 3, 0);
-    layout->addWidget(clearButton, 3, 1);
+    //layout->addWidget(clearButton, 3, 1);
     layout->addWidget(sqlLabel,4,0);
     setLayout(layout);
     setWindowTitle("Dodaj Notatkę");
@@ -34,6 +34,7 @@ addnotedialog::addnotedialog(QWidget *parent) :
         sqlLabel->setText("Połączono z bazą danych");
 
     connect(addButton, SIGNAL(clicked()), this, SLOT(on_addButton_clicked()));
+    //connect(clearButton, SIGNAL(clicked()), this, SLOT(close()));
 }
 
 void addnotedialog::on_addButton_clicked()
@@ -62,6 +63,7 @@ void addnotedialog::on_addButton_clicked()
         QMessageBox::critical(this,tr("error::"),addnote.lastError().text());
     }
 }
+
 addnotedialog::~addnotedialog()
 {
     //delete ui;

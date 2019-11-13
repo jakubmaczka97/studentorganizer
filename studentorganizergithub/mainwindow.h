@@ -28,6 +28,7 @@
 #include <QDebug>
 #include "addnotedialog.h"
 #include "addcaldialog.h"
+#include <QSystemTrayIcon>
 
 
 class MainWindow : public QMainWindow
@@ -52,6 +53,7 @@ public:
             qDebug()<<("Wszystko działa");
             return true;
         }
+
     }
 
 public:
@@ -62,37 +64,30 @@ private slots:
     void on_addCashButton_clicked();
     void on_seeNoteButton_clicked();
     void on_seeCalButton_clicked();
+    void on_seeCashButton_clicked();
 
 private:
-    //addnotedialog *dialog;
-    //addcaldialog *dialog2;
     //Main Window
     QWidget *mainWidget;
-    QVBoxLayout *centralWidgetLayout;
-    QFrame *line;
+    QGridLayout *widgetLayout;
     //Sekcja Notatki
-    QGridLayout *noteLayout;
     QLabel *noteLabel;
-    QHBoxLayout *noteButtons;
     QPushButton *addNoteButton;
     QPushButton *seeNoteButton;
-    QPushButton *delNoteButton;
     //Sekcja Kalendarz
     QGridLayout *calLayout;
     QLabel *calLabel;
     QHBoxLayout *calButtons;
     QPushButton *addCalButton;
     QPushButton *seeCalButton;
-    QPushButton *delCalButton;
     //Sekcja Budżet
-    QGridLayout *cashLayout;
     QLabel *cashLabel;
-    QHBoxLayout *cashButtons;
     QPushButton *addCashButton;
     QPushButton *seeCashButton;
-    QPushButton *delCashButton;
-
+    QPushButton *closeButton;
     QLabel *sqlLabel;
+    QFrame *line;
+
     //Metody
     void createLine();
     void createMenu();
